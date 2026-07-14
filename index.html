@@ -2,368 +2,50 @@
 <html lang="hr">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ADORA BEAUTY CONCEPT - Loyalty</title>
-    <script src="https://unpkg.com/html5-qrcode" type="text/javascript"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <title>ADORA Admin Skener</title>
+    <script src="https://unpkg.com/html5-qrcode"></script>
     <style>
-        :root {
-            --primary-color: #d4af37; /* Zlatna */
-            --accent-color: #fdecef; /* Svijetlo roza pozadina kartice */
-            --dark-bg: #1a1a1a; /* Tamna pozadina aplikacije za luksuzan izgled */
-            --text-color: #333333;
-            --white: #ffffff;
-            --success-color: #27ae60;
-        }
-
-        body {
-            font-family: 'Poppins', sans-serif;
-            background-color: var(--dark-bg);
-            color: var(--white);
-            margin: 0;
-            padding: 15px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            box-sizing: border-box;
-        }
-
-        .loyalty-card {
-            background: var(--white);
-            color: var(--text-color);
-            border-radius: 24px;
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
-            padding: 30px 20px;
-            width: 100%;
-            max-width: 380px;
-            text-align: center;
-            box-sizing: border-box;
-            border: 2px solid var(--primary-color);
-            position: relative;
-        }
-
-        h1 {
-            font-family: 'Playfair Display', serif;
-            font-size: 24px;
-            margin: 0;
-            letter-spacing: 2px;
-            text-transform: uppercase;
-            color: #1a1a1a;
-            font-weight: 700;
-        }
-
-        p.brand-sub {
-            font-size: 11px;
-            text-transform: uppercase;
-            letter-spacing: 4px;
-            color: var(--primary-color);
-            margin: 5px 0 20px 0;
-            font-weight: 600;
-        }
-
-        p.subtitle {
-            font-size: 13px;
-            color: #666;
-            margin-bottom: 25px;
-            line-height: 1.5;
-        }
-
-        .stamps-container {
-            display: grid;
-            grid-template-columns: repeat(5, 1fr);
-            gap: 12px;
-            margin-bottom: 25px;
-        }
-
-        .stamp {
-            aspect-ratio: 1;
-            border: 2px dashed #ddd;
-            border-radius: 50%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-size: 14px;
-            color: #999;
-            transition: all 0.3s ease;
-            font-weight: bold;
-            background: #fff;
-            position: relative;
-        }
-
-        /* 5. i 10. termin su posebni i označeni */
-        .stamp.special {
-            border-color: var(--primary-color);
-            background-color: #fffdf5;
-            color: var(--primary-color);
-            font-size: 10px;
-            border-style: solid;
-        }
-
-        /* Aktivni (popunjeni) štambilji */
-        .stamp.active {
-            border-style: solid;
-            border-color: var(--primary-color);
-            background-color: var(--accent-color);
-            color: var(--primary-color);
-            transform: scale(1.05);
-            font-size: 22px;
-        }
-
-        /* Posebni aktivni izgled za 5. i 10. */
-        .stamp.active.special {
-            background-color: #f7e7b4;
-            color: #1a1a1a;
-        }
-
-        .reward-info {
-            background: #fdfaf2;
-            border: 1px solid #f1e4c3;
-            border-radius: 12px;
-            padding: 12px;
-            margin-bottom: 20px;
-            font-size: 13px;
-            color: #555;
-            line-height: 1.4;
-        }
-
-        .reward-info strong {
-            color: #1a1a1a;
-        }
-
-        .btn {
-            background-color: #1a1a1a;
-            color: var(--white);
-            border: 1px solid var(--primary-color);
-            padding: 14px 20px;
-            font-size: 13px;
-            border-radius: 30px;
-            cursor: pointer;
-            width: 100%;
-            font-weight: bold;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            transition: all 0.3s ease;
-            margin-top: 10px;
-        }
-
-        .btn:hover {
-            background-color: var(--primary-color);
-            color: #1a1a1a;
-        }
-
-        .btn-claim {
-            background-color: var(--success-color);
-            border-color: var(--success-color);
-            color: white;
-            display: none; /* Prikazuje se samo kada se skupi dovoljno štambilja */
-        }
-
-        .btn-claim:hover {
-            background-color: #219150;
-            color: white;
-        }
-
-        /* Sekcija za skener */
-        #scanner-section {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0,0,0,0.95);
-            z-index: 1000;
-            justify-content: center;
-            align-items: center;
-            flex-direction: column;
-            padding: 20px;
-            box-sizing: border-box;
-        }
-
-        #reader {
-            width: 100%;
-            max-width: 350px;
-            background: white;
-            border-radius: 16px;
-            overflow: hidden;
-        }
-
-        .btn-close-scanner {
-            background: #e74c3c;
-            border: none;
-            color: white;
-            padding: 12px 30px;
-            border-radius: 20px;
-            margin-top: 20px;
-            font-weight: bold;
-            cursor: pointer;
-            text-transform: uppercase;
-            font-size: 13px;
-        }
+        body { font-family: sans-serif; background: #1a1a1a; color: white; text-align: center; padding: 20px; }
+        .card { background: white; color: #333; padding: 20px; border-radius: 15px; max-width: 400px; margin: auto; }
+        #reader { width: 100%; border-radius: 10px; }
+        .btn { background: #d4af37; color: white; border: none; padding: 15px; border-radius: 25px; width: 100%; font-weight: bold; cursor: pointer; }
     </style>
 </head>
 <body>
 
-    <div class="loyalty-card">
-        <div class="logo-area">
-            <h1>Adora</h1>
-            <p class="brand-sub">Beauty Concept</p>
-        </div>
-
-        <p class="subtitle">Sakupljajte posjete i ostvarite ekskluzivne pogodnosti koje smo pripremili za Vas.</p>
-
-        <!-- Nagrade info box -->
-        <div class="reward-info">
-            🎁 <strong>5. POSJET:</strong> 50% popusta na termin!<br>
-            ✨ <strong>10. POSJET:</strong> BESPLATAN termin!
-        </div>
-
-        <!-- Kontejner za 10 štambilja -->
-        <div class="stamps-container" id="stamps-box">
-            <!-- Štambilji će se generirati dinamički kroz JavaScript -->
-        </div>
-
-        <!-- Kontrolni gumbi -->
-        <button class="btn" id="scan-btn">Skeniraj za štambilj</button>
-        <button class="btn btn-claim" id="claim-btn">Preuzmi Nagradu</button>
-    </div>
-
-    <!-- Scanner overlay -->
-    <div id="scanner-section">
-        <h3 style="margin-bottom: 20px; font-family: 'Playfair Display', serif; color: var(--primary-color);">SKENIRAJTE QR KOD SALONA</h3>
+    <div class="card">
+        <h2>ADORA Admin Panel</h2>
+        <p>Skeniraj QR kod klijenta za dodavanje boda:</p>
+        <button class="btn" id="start-scan">POKRENI SKENER</button>
         <div id="reader"></div>
-        <button class="btn-close-scanner" id="close-scanner-btn">Zatvori</button>
+        <div id="result" style="margin-top:20px; font-weight:bold;"></div>
     </div>
 
     <script>
-        const TOTAL_STAMPS = 10;
-        let currentStamps = parseInt(localStorage.getItem('adora_stamps')) || 0;
-        
-        const stampsBox = document.getElementById('stamps-box');
-        const scanBtn = document.getElementById('scan-btn');
-        const claimBtn = document.getElementById('claim-btn');
-        const scannerSection = document.getElementById('scanner-section');
-        const closeScannerBtn = document.getElementById('close-scanner-btn');
-        
-        let html5QrcodeScanner = null;
+        // Simulacija baze podataka klijenata u pregledniku
+        let klijenti = JSON.parse(localStorage.getItem('adora_db')) || {};
 
-        // Generiranje kartica/štambilja
-        function renderStamps() {
-            stampsBox.innerHTML = '';
-            for (let i = 1; i <= TOTAL_STAMPS; i++) {
-                const stampEl = document.createElement('div');
-                stampEl.classList.add('stamp');
-                
-                if (i === 5) {
-                    stampEl.classList.add('special');
-                    stampEl.innerHTML = i <= currentStamps ? '🌸' : '-50%';
-                } else if (i === 10) {
-                    stampEl.classList.add('special');
-                    stampEl.innerHTML = i <= currentStamps ? '🎁' : 'GRATIS';
-                } else {
-                    stampEl.innerHTML = i <= currentStamps ? '✨' : i;
-                }
-
-                if (i <= currentStamps) {
-                    stampEl.classList.add('active');
-                }
-
-                stampsBox.appendChild(stampEl);
-            }
+        function onScanSuccess(decodedText) {
+            // decodedText je npr "ADORA-KLIJENT-IVANA"
+            let klijentID = decodedText;
             
-            checkRewards();
-        }
-
-        // Provjera jesu li ostvarene nagrade i prikaz gumba za preuzimanje
-        function checkRewards() {
-            if (currentStamps === 5) {
-                claimBtn.style.display = 'block';
-                claimBtn.innerText = 'Iskoristi 50% popusta';
-                scanBtn.style.display = 'none';
-            } else if (currentStamps === 10) {
-                claimBtn.style.display = 'block';
-                claimBtn.innerText = 'Preuzmi BESPLATAN termin';
-                scanBtn.style.display = 'none';
-            } else {
-                claimBtn.style.display = 'none';
-                scanBtn.style.display = 'block';
+            if (!klijenti[klijentID]) {
+                klijenti[klijentID] = { ime: klijentID, bodovi: 0 };
             }
-        }
 
-        // Akcija za preuzimanje nagrade (nakon što se nagrada iskoristi, klijent nastavlja dalje skupljati)
-        claimBtn.addEventListener('click', () => {
-            if (currentStamps === 5) {
-                alert("Čestitamo! Ostvarili ste 50% popusta na ovaj tretman. Pokažite ovaj ekran osoblju.");
-                // Automatski prebaci na 6. korak kako bi mogli nastaviti do 10
-                currentStamps = 6; 
-            } else if (currentStamps === 10) {
-                alert("Čestitamo! Ostvarili ste BESPLATAN termin. Hvala vam na vjernosti!");
-                // Resetiraj karticu natrag na početak nakon iskorištenog gratis termina
-                currentStamps = 0;
-            }
-            localStorage.setItem('adora_stamps', currentStamps);
-            renderStamps();
-        });
-
-        // Pokretanje kamere za skeniranje
-        scanBtn.addEventListener('click', () => {
-            scannerSection.style.display = 'flex';
+            klijenti[klijentID].bodovi++;
+            localStorage.setItem('adora_db', JSON.stringify(klijenti));
             
-            html5QrcodeScanner = new Html5QrcodeScanner(
-                "reader", { fps: 10, qrbox: 250 }, false
-            );
+            document.getElementById('result').innerText = 
+                `Dodano! Klijent: ${klijenti[klijentID].ime} | Ukupno: ${klijenti[klijentID].bodovi} bodova.`;
             
-            html5QrcodeScanner.render(onScanSuccess, onScanError);
-        });
-
-        // Gasenje skenera
-        closeScannerBtn.addEventListener('click', closeScanner);
-
-        function closeScanner() {
-            if (html5QrcodeScanner) {
-                html5QrcodeScanner.clear().then(() => {
-                    scannerSection.style.display = 'none';
-                }).catch(err => {
-                    console.error("Greška pri gašenju kamere: ", err);
-                    scannerSection.style.display = 'none';
-                });
-            } else {
-                scannerSection.style.display = 'none';
-            }
+            html5QrcodeScanner.clear();
         }
 
-        // Što se događa kad se skenira ispravan kod
-        function onScanSuccess(decodedText, decodedResult) {
-            closeScanner();
-            
-            // Kodovi za salon
-            if (decodedText === "ADORA-ADD-STAMP") {
-                if (currentStamps < TOTAL_STAMPS) {
-                    // Ako su upravo bili na 5, skok na 6 rješava gumb "Iskoristi popust", pa ne preskačemo
-                    currentStamps++;
-                    localStorage.setItem('adora_stamps', currentStamps);
-                    renderStamps();
-                    alert("Štambilj uspješno dodan! Hvala Vam na posjetu. ✨");
-                } else {
-                    alert("Vaša kartica je već puna! Molimo iskoristite besplatan termin.");
-                }
-            } else if (decodedText === "ADORA-RESET") {
-                currentStamps = 0;
-                localStorage.setItem('adora_stamps', currentStamps);
-                renderStamps();
-                alert("Kartica je uspješno resetirana na nulu.");
-            } else {
-                alert("Nevažeći QR kod salona.");
-            }
-        }
-
-        function onScanError(err) {
-            // Ignoriraj tihe greške skeniranja u hodu
-        }
-
-        // Inicijalno renderiranje pri učitavanju stranice
-        renderStamps();
+        let html5QrcodeScanner = new Html5QrcodeScanner("reader", { fps: 10, qrbox: 250 });
+        document.getElementById('start-scan').onclick = () => {
+            html5QrcodeScanner.render(onScanSuccess);
+        };
     </script>
 </body>
 </html>
