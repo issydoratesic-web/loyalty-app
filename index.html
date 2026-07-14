@@ -12,7 +12,6 @@
             --dark-bg: #1a1a1a; /* Tamna pozadina aplikacije za luksuzan izgled */
             --text-color: #333333;
             --white: #ffffff;
-            --success-color: #27ae60;
         }
 
         body {
@@ -58,19 +57,14 @@
             text-transform: uppercase;
             letter-spacing: 3px;
             color: var(--primary-color);
-            margin: 5px 0 15px 0;
+            margin: 5px 0 20px 0;
             font-weight: bold;
         }
 
-        .reward-info {
-            background-color: var(--accent-color);
-            border-radius: 12px;
-            padding: 10px;
-            font-size: 12px;
-            color: #444;
-            margin-bottom: 20px;
-            border-left: 4px solid var(--primary-color);
-            text-align: left;
+        p.subtitle {
+            font-size: 13px;
+            color: #666;
+            margin-bottom: 25px;
             line-height: 1.4;
         }
 
@@ -89,17 +83,18 @@
             justify-content: center;
             align-items: center;
             font-size: 14px;
-            color: #bbb;
+            color: #999;
             transition: all 0.3s ease;
             font-weight: bold;
             background: #fff;
             position: relative;
         }
 
-        /* Isticanje ključnih koraka (5 i 10) na kartici */
-        .stamp-5, .stamp-10 {
-            border-color: #bfa15f;
-            color: #bfa15f;
+        .stamp.special {
+            border-color: var(--primary-color);
+            background-color: #fffdf5;
+            color: var(--primary-color);
+            font-size: 11px;
         }
 
         .stamp.active {
@@ -111,22 +106,12 @@
             font-size: 20px;
         }
 
-        .stamp-label {
-            position: absolute;
-            bottom: -15px;
-            font-size: 8px;
-            text-transform: uppercase;
-            color: #888;
-            width: 100%;
-            text-align: center;
-        }
-
         .btn {
             background-color: #1a1a1a;
             color: var(--white);
             border: 1px solid var(--primary-color);
             padding: 14px 20px;
-            font-size: 13px;
+            font-size: 14px;
             border-radius: 30px;
             cursor: pointer;
             width: 100%;
@@ -142,13 +127,12 @@
             color: #1a1a1a;
         }
 
-        .btn-reward {
-            background-color: var(--success-color);
-            border-color: var(--success-color);
-            color: white;
+        .btn-claim {
+            background-color: #27ae60;
+            border-color: #27ae60;
         }
 
-        .btn-reward:hover {
+        .btn-claim:hover {
             background-color: #219150;
             color: white;
         }
@@ -168,30 +152,4 @@
             flex-direction: column;
         }
 
-        #reader {
-            width: 300px;
-            background: white;
-            border-radius: 15px;
-            overflow: hidden;
-        }
-
-        .close-scanner {
-            margin-top: 20px;
-            background: red;
-            border: none;
-            color: white;
-            padding: 10px 20px;
-            border-radius: 20px;
-            cursor: pointer;
-        }
-
-        .reward-banner {
-            background-color: #e8f5e9;
-            color: var(--success-color);
-            padding: 10px;
-            border-radius: 10px;
-            font-weight: bold;
-            font-size: 14px;
-            margin-bottom: 15px;
-            border: 1px solid var(--success-color);
-            display: none;
+        #reader
