@@ -3,199 +3,195 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Loyalty Kartica</title>
+    <title>ADORA BEAUTY CONCEPT - Loyalty</title>
+    <script src="https://unpkg.com/html5-qrcode" type="text/javascript"></script>
     <style>
         :root {
-            --primary-color: #4CAF50;
-            --bg-color: #f4f4f9;
-            --card-bg: #ffffff;
+            --primary-color: #d4af37; /* Zlatna */
+            --accent-color: #fdecef; /* Svijetlo roza pozadina kartice */
+            --dark-bg: #1a1a1a; /* Tamna pozadina aplikacije za luksuzan izgled */
             --text-color: #333333;
+            --white: #ffffff;
+            --success-color: #27ae60;
         }
 
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: var(--bg-color);
-            color: var(--text-color);
+            font-family: 'Playfair Display', 'Segoe UI', serif;
+            background-color: var(--dark-bg);
+            color: var(--white);
             margin: 0;
-            padding: 20px;
+            padding: 15px;
             display: flex;
             justify-content: center;
             align-items: center;
             min-height: 100vh;
+            box-sizing: border-box;
         }
 
         .loyalty-card {
-            background: var(--card-bg);
-            border-radius: 20px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-            padding: 30px;
+            background: var(--white);
+            color: var(--text-color);
+            border-radius: 24px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
+            padding: 25px;
             width: 100%;
             max-width: 380px;
             text-align: center;
             box-sizing: border-box;
+            border: 2px solid var(--primary-color);
+        }
+
+        .logo-area {
+            margin-bottom: 15px;
         }
 
         h1 {
-            font-size: 24px;
-            margin-bottom: 5px;
-            color: var(--primary-color);
+            font-size: 22px;
+            margin: 0;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: #1a1a1a;
         }
 
-        p.subtitle {
-            font-size: 14px;
-            color: #777;
-            margin-bottom: 25px;
+        p.brand-sub {
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            color: var(--primary-color);
+            margin: 5px 0 15px 0;
+            font-weight: bold;
+        }
+
+        .reward-info {
+            background-color: var(--accent-color);
+            border-radius: 12px;
+            padding: 10px;
+            font-size: 12px;
+            color: #444;
+            margin-bottom: 20px;
+            border-left: 4px solid var(--primary-color);
+            text-align: left;
+            line-height: 1.4;
         }
 
         .stamps-container {
             display: grid;
             grid-template-columns: repeat(5, 1fr);
-            gap: 12px;
+            gap: 10px;
             margin-bottom: 25px;
         }
 
         .stamp {
             aspect-ratio: 1;
-            border: 2px dashed #ccc;
+            border: 2px dashed #ddd;
             border-radius: 50%;
             display: flex;
             justify-content: center;
             align-items: center;
-            font-size: 18px;
-            color: #ccc;
+            font-size: 14px;
+            color: #bbb;
             transition: all 0.3s ease;
             font-weight: bold;
+            background: #fff;
+            position: relative;
+        }
+
+        /* Isticanje ključnih koraka (5 i 10) na kartici */
+        .stamp-5, .stamp-10 {
+            border-color: #bfa15f;
+            color: #bfa15f;
         }
 
         .stamp.active {
             border-style: solid;
             border-color: var(--primary-color);
-            background-color: rgba(76, 175, 80, 0.1);
+            background-color: var(--accent-color);
             color: var(--primary-color);
             transform: scale(1.05);
+            font-size: 20px;
+        }
+
+        .stamp-label {
+            position: absolute;
+            bottom: -15px;
+            font-size: 8px;
+            text-transform: uppercase;
+            color: #888;
+            width: 100%;
+            text-align: center;
         }
 
         .btn {
-            background-color: var(--primary-color);
-            color: white;
-            border: none;
-            padding: 12px 24px;
-            font-size: 16px;
-            border-radius: 25px;
+            background-color: #1a1a1a;
+            color: var(--white);
+            border: 1px solid var(--primary-color);
+            padding: 14px 20px;
+            font-size: 13px;
+            border-radius: 30px;
             cursor: pointer;
             width: 100%;
             font-weight: bold;
-            transition: background 0.2s;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: all 0.3s ease;
             margin-top: 10px;
         }
 
         .btn:hover {
-            background-color: #45a049;
+            background-color: var(--primary-color);
+            color: #1a1a1a;
         }
 
-        .btn-reset {
-            background-color: #e74c3c;
+        .btn-reward {
+            background-color: var(--success-color);
+            border-color: var(--success-color);
+            color: white;
         }
 
-        .btn-reset:hover {
-            background-color: #c0392b;
+        .btn-reward:hover {
+            background-color: #219150;
+            color: white;
         }
 
-        .reward-msg {
-            color: var(--primary-color);
-            font-weight: bold;
-            margin-top: 15px;
+        /* Sekcija za skener */
+        #scanner-section {
             display: none;
-            font-size: 18px;
-            animation: pulse 1.5s infinite;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.9);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
         }
 
-        @keyframes pulse {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.05); }
-            100% { transform: scale(1); }
-        }
-    </style>
-</head>
-<body>
-
-    <div class="loyalty-card">
-        <h1 id="brand-name">Kafić "Bonus"</h1>
-        <p class="subtitle">Skupi 10 pečata i preuzmi besplatnu kavu!</p>
-
-        <div class="stamps-container" id="stampsBox">
-            </div>
-
-        <button class="btn" onclick="addStamp()">Dodaj pečat</button>
-        <button class="btn btn-reset" id="resetBtn" style="display: none;" onclick="redeemReward()">Iskoristi nagradu</button>
-        
-        <div class="reward-msg" id="rewardMsg">🎉 Čestitamo! Ostvarili ste nagradu! 🎉</div>
-    </div>
-
-    <script>
-        // Postavke
-        const maxStamps = 10;
-        const ownerPassword = "1234"; // Lozinka za poništavanje/preuzimanje nagrade
-        
-        // Učitavanje trenutnog stanja iz memorije preglednika (Local Storage)
-        let currentStamps = parseInt(localStorage.getItem('currentStamps')) || 0;
-
-        const stampsBox = document.getElementById('stampsBox');
-        const resetBtn = document.getElementById('resetBtn');
-        const rewardMsg = document.getElementById('rewardMsg');
-
-        // Funkcija za iscrtavanje pečata na ekranu
-        function renderStamps() {
-            stampsBox.innerHTML = '';
-            for (let i = 1; i <= maxStamps; i++) {
-                const stamp = document.createElement('div');
-                stamp.classList.add('stamp');
-                
-                if (i <= currentStamps) {
-                    stamp.classList.add('active');
-                    stamp.innerHTML = '☕'; // Možeš promijeniti emoji ovisno o tvom biznisu
-                } else {
-                    stamp.innerText = i;
-                }
-                stampsBox.appendChild(stamp);
-            }
-
-            // Provjera je li kartica puna
-            if (currentStamps >= maxStamps) {
-                resetBtn.style.display = 'block';
-                rewardMsg.style.display = 'block';
-            } else {
-                resetBtn.style.display = 'none';
-                rewardMsg.style.display = 'none';
-            }
+        #reader {
+            width: 300px;
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
         }
 
-        // Funkcija za dodavanje pečata
-        function addStamp() {
-            if (currentStamps < maxStamps) {
-                currentStamps++;
-                localStorage.setItem('currentStamps', currentStamps);
-                renderStamps();
-            } else {
-                alert("Kartica je već puna! Iskoristite nagradu.");
-            }
+        .close-scanner {
+            margin-top: 20px;
+            background: red;
+            border: none;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 20px;
+            cursor: pointer;
         }
 
-        // Funkcija za iskorištavanje nagrade (traži lozinku vlasnika)
-        function redeemReward() {
-            const input = prompt("Unesite PIN osoblja za preuzimanje nagrade:");
-            if (input === ownerPassword) {
-                currentStamps = 0;
-                localStorage.setItem('currentStamps', currentStamps);
-                renderStamps();
-                alert("Nagrada uspješno iskorištena! Kartica je resetirana.");
-            } else {
-                alert("Pogrešan PIN!");
-            }
-        }
-
-        // Inicijalno iscrtavanje pri pokretanju
-        renderStamps();
-    </script>
-</body>
-</html>
+        .reward-banner {
+            background-color: #e8f5e9;
+            color: var(--success-color);
+            padding: 10px;
+            border-radius: 10px;
+            font-weight: bold;
+            font-size: 14px;
+            margin-bottom: 15px;
+            border: 1px solid var(--success-color);
+            display: none;
