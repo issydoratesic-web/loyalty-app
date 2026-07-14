@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="hr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Loyalty Kartica</title>
+    <style>
+        :root {
+            --primary-color: #4CAF50;
+            --bg-color: #f4f4f9;
+            --card-bg: #ffffff;
+            --text-color: #333333;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .loyalty-card {
+            background: var(--card-bg);
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+            width: 100%;
+            max-width: 380px;
+            text-align: center;
+            box-sizing: border-box;
+        }
+
+        h1 {
+            font-size: 24px;
+            margin-bottom: 5px;
+            color: var(--primary-color);
+        }
+
+        p.subtitle {
+            font-size: 14px;
+            color: #777;
+            margin-bottom: 25px;
+        }
+
+        .stamps-container {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 12px;
+            margin-bottom: 25px;
+        }
+
+        .stamp {
+            aspect-ratio: 1;
+            border: 2px dashed #ccc;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 18px;
+            color: #ccc;
+            transition: all 0.3s ease;
+            font-weight: bold;
+        }
+
+        .stamp.active {
+            border-style: solid;
+            border-color: var(--primary-color);
+            background-color: rgba(76, 175, 80, 0.1);
+            color: var(--primary-color);
+            transform: scale(1.05);
+        }
+
+        .btn {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            font-size: 16px;
+            border-radius: 25px;
+            cursor: pointer;
+            width: 100%;
+            font-weight: bold;
+            transition: background 0.2s;
+            margin-top: 10px;
+        }
+
+        .btn:hover {
+            background-color: #45a049;
+        }
+
+        .btn-reset {
+            background-color: #e74c3c;
+        }
+
+        .btn-reset:hover {
+            background-color: #c0392b;
+        }
+
+        .reward-msg {
+            color: var(--primary-color);
+            font-weight: bold;
+            margin-top: 15px;
+            display: none;
+            font-size: 18px;
+            animation: pulse 1.5s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="loyalty-card">
+        <h1 id="brand-name">Kafić "Bonus"</h1>
+        <p class="subtitle">Skupi 10 pečata i preuzmi besplatnu kavu!</p>
+
+        <div class="stamps-container" id="stampsBox">
+            </div>
+
+        <button class="btn" onclick="addStamp()">Dodaj pečat</button>
+        <button class="btn btn-reset" id="resetBtn" style="display: none;" onclick="redeemReward()">Iskoristi nagradu</button>
+        
+        <div class="reward-msg" id="rewardMsg">🎉 Čestitamo! Ostvarili ste nagradu! 🎉</div>
+    </div>
+
+    <script>
+        // Postavke
+        const maxStamps = 10;
+        const ownerPassword = "1234"; // Lozinka za poništavanje/preuzimanje nagrade
+        
+        // Učitavanje trenutnog stanja iz memorije preglednika (Local Storage)
+        let currentStamps = parseInt(localStorage.getItem('currentStamps')) || 0;
+
+        const stampsBox = document.getElementById('stampsBox');
+        const resetBtn = document.getElementById('resetBtn');
+        const rewardMsg = document.getElementById('rewardMsg');
+
+        // Funkcija za iscrtavanje pečata na ekranu
+        function renderStamps() {
+            stampsBox.innerHTML = '';
+            for (let i = 1; i <= maxStamps; i++) {
+                const stamp = document.createElement('div');
+                stamp.classList.add('stamp');
+                
+                if (i <= currentStamps) {
+                    stamp.classList.add('active');
+                    stamp.innerHTML = '☕'; // Možeš promijeniti emoji ovisno o tvom biznisu
+                } else {
+                    stamp.innerText = i;
+                }
+                stampsBox.appendChild(stamp);
+            }
+
+            // Provjera je li kartica puna
+            if (currentStamps >= maxStamps) {
+                resetBtn.style.display = 'block';
+                rewardMsg.style.display = 'block';
+            } else {
+                resetBtn.style.display = 'none';
+                rewardMsg.style.display = 'none';
+            }
+        }
+
+        // Funkcija za dodavanje pečata
+        function addStamp() {
+            if (currentStamps < maxStamps) {
+                currentStamps++;
+                localStorage.setItem('currentStamps', currentStamps);
+                renderStamps();
+            } else {
+                alert("Kartica je već puna! Iskoristite nagradu.");
+            }
+        }
+
+        // Funkcija za iskorištavanje nagrade (traži lozinku vlasnika)
+        function redeemReward() {
+            const input = prompt("Unesite PIN osoblja za preuzimanje nagrade:");
+            if (input === ownerPassword) {
+                currentStamps = 0;
+                localStorage.setItem('currentStamps', currentStamps);
+                renderStamps();
+                alert("Nagrada uspješno iskorištena! Kartica je resetirana.");
+            } else {
+                alert("Pogrešan PIN!");
+            }
+        }
+
+        // Inicijalno iscrtavanje pri pokretanju
+        renderStamps();
+    </script>
+</body>
+</html>
